@@ -34,6 +34,7 @@ ext {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-devtools:2.6.4'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -47,6 +48,7 @@ dependencies {
 task deleteVueArtifact(type: Delete) {
     delete "src/main/resources/static"
 }
+
 
 //npm install
 task frontNpmInstall(type: NpmTask) {
