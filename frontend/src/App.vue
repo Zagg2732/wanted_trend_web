@@ -16,19 +16,28 @@ export default {
 /* css */
 @import "assets/templates/css/style.css";
 
-@import "assets/templates/vendor/boxicons/css/boxicons.min.css";
-@import "assets/templates/vendor/quill/quill.snow.css";
-@import "assets/templates/vendor/quill/quill.bubble.css";
-@import "assets/templates/vendor/remixicon/remixicon.css";
-@import "assets/templates/vendor/simple-datatables/style.css";
+@font-face {
+  font-family: 'GmarketSansBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: GmarketSansMedium, GmarketSansBold, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #f6f9ff;
 }
 
 nav {
