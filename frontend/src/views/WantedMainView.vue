@@ -445,16 +445,21 @@ export default {
         chartOptions: {
           chart: {
             height: 350,
-            type: 'line',
+            type: 'area',
             zoom: {
               enabled: false
             }
           },
           dataLabels: {
-            enabled: true
+            enabled: false
+          },
+          colors: ['#4154f1', '#2eca6a', '#ff771d'],
+          markers:{
+            size: 4
           },
           stroke: {
-            curve: 'straight'
+            curve: 'smooth',
+            width: 2
           },
           grid: {
             row: {
