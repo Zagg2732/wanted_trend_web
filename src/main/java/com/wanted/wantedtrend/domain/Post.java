@@ -1,5 +1,7 @@
 package com.wanted.wantedtrend.domain;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.sql.Date;
 

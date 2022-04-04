@@ -397,29 +397,42 @@
 </template>
 
 <script>
+import mixins from "@/mixins";
+
 export default {
   name: "WantedMainView", //컴포넌트 이름
   components: {}, //다른 컴포넌트 사용 시 import(배열로 등록)
+  mixins : [mixins],
   data() { //html과 js코드에서 사용할 데이터 변수 선언
     return {
       mainChart: '',
       sideChart1: '',
       sideChart2: '',
+      testHello:''
     };
   },
   setup() {
   }, //컴포지션 API
   created() {
     this.initChart()
+    this.testApiCallByMixins()
   }, //컴포넌트가 생성되면 실행
   mounted() {
   }, //template에 정의된 html 코드가 랜더링된 후 실행
   unmounted() {
   }, //unmount가 완료된 후 실행
   methods: {
+    async testApiCallByMixins() {
+      console.log(process.env)
+      this.testHello = await this.$api('/api/v1/hello', 'get')
+      console.log(this.testHello)
+      alert(this.testHello)
+    },
     initChart() { // 차트 init
       // vue3-apex charts for pie example from https://apexcharts.com/vue-chart-demos/pie-charts/simple-pie-chart/
       // main chart
+
+//TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA//
       this.mainChart = {
         series: [44, 55, 13, 43, 22],
         chartOptions: {

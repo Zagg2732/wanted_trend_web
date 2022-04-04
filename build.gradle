@@ -45,8 +45,8 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
     implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.12'
-
-
+    // mariadb
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
 
 //이미 빌드된 파일 삭제
