@@ -1,6 +1,8 @@
 package com.wanted.wantedtrend.domain;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "post_lang")
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자 접근제어 참조 -> https://cobbybb.tistory.com/14
+@AllArgsConstructor
+@Builder
 public class PostLang {
 
     @Id
@@ -18,6 +22,7 @@ public class PostLang {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    private String lang;    // 프로그래밍 언어
+    private String lang;
 
+    private String type;
 }
