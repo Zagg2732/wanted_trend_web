@@ -2,11 +2,13 @@ package com.wanted.wantedtrend.json;
 
 import com.wanted.wantedtrend.enumerate.LangType;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Getter
+@ToString
 public class TotalLangCnt {
     private LangType langType;
     private Map<String, Long> statistics = new LinkedHashMap<>();

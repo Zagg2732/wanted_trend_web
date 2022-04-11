@@ -46,11 +46,16 @@ public class PostResDto {
 
     public PostLang toPostLangEntity(Post post, String lang, LangType type) {
 
-
+        Lang convertedLang = null;
+        try {
+            convertedLang = Lang.ofLangCode(lang);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return PostLang.builder()
                 .post(post)
-///////////////////////////////////////////// .lang(lang)  <- String -> Lang enum 변환 ///////////////////
+                .lang(convertedLang)
                 .type(type)
                 .build();
     }
