@@ -4,6 +4,8 @@ package com.wanted.wantedtrend.web.dto;
 
 import com.wanted.wantedtrend.domain.Post;
 import com.wanted.wantedtrend.domain.PostLang;
+import com.wanted.wantedtrend.enumerate.Lang;
+import com.wanted.wantedtrend.enumerate.LangType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -42,11 +44,13 @@ public class PostResDto {
                 .build();
     }
 
-    public PostLang toPostLangEntity(Post post, String lang, String type) {
+    public PostLang toPostLangEntity(Post post, String lang, LangType type) {
+
+
 
         return PostLang.builder()
                 .post(post)
-                .lang(lang)
+///////////////////////////////////////////// .lang(lang)  <- String -> Lang enum 변환 ///////////////////
                 .type(type)
                 .build();
     }

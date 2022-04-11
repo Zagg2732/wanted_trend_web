@@ -1,5 +1,8 @@
 package com.wanted.wantedtrend.domain;
 
+import com.wanted.wantedtrend.enumerate.Lang;
+import com.wanted.wantedtrend.enumerate.LangConverter;
+import com.wanted.wantedtrend.enumerate.LangType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +25,9 @@ public class PostLang {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    private String lang;
+    @Convert(converter = LangConverter.class)
+    private Lang lang;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private LangType type;
 }
