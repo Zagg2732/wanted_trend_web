@@ -22,9 +22,9 @@ public class Post {
 
     private String url;         // wd url
 
-    private Date date;          // 올린날짜
+    private String date;          // 올린날짜
 
-    private Date crawlDate;     // 크롤링된 날짜
+    private String crawlDate;     // 크롤링된 날짜
 
     private String location;    // 지역
 

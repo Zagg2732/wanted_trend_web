@@ -1,4 +1,4 @@
-package com.wanted.wantedtrend.web.dto.analyse;
+package com.wanted.wantedtrend.web.dto.jpa_dto;
 
 
 import com.wanted.wantedtrend.enumerate.Lang;

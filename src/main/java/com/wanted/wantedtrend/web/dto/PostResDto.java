@@ -34,8 +34,8 @@ public class PostResDto {
     public Post toPostEntity() {
         return Post.builder()
                 .url(url)
-                .date(Date.valueOf(date))
-                .crawlDate(Date.valueOf(crawlDate))
+                .date(date)
+                .crawlDate(crawlDate)
                 .location(location)
                 .mainTask(mainTask)
                 .requirement(requirement)

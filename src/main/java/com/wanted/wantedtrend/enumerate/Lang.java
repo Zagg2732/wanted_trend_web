@@ -1,7 +1,5 @@
 package com.wanted.wantedtrend.enumerate;
 
-import lombok.Getter;
-
 import java.util.Arrays;
 
 // 사용하는 프로그래밍 언어
