@@ -13,5 +13,5 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 public class Top3LangTrend {
-    Map<LangType, Map<Lang, Map<String, Integer>>> data;
+    Map<LangType, Map<String, Map<String, Integer>>> data;
 }

@@ -14,6 +14,7 @@ import com.wanted.wantedtrend.web.dto.jpa_dto.CountTypeLangPerDateDto;
 import lombok.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,13 +28,20 @@ import java.util.stream.Collectors;
 @Component
 public class CrawlService {
 
+    // get value from application.properties
+    @Value("${path.save.wanted_json}")
+    private String jsonPath;
+
+    @Value("${path.load.wanted_excel}")
+    private String excelPath;
+
     private final PostRepository postRepository;
     private final PostLangRepository postLangRepository;
 
     // test code - crawl 호출, 추후 schedular 로 동작 //
-//    @Scheduled(cron = "0 28 14 * * *")
-    @Scheduled(cron = "0/20 * * * * *")
-    public void crawl() throws IOException {
+    @Scheduled(cron = "0 18 16 * * *")
+//    @Scheduled(cron = "0/20 * * * * *")
+    public void crawl() throws IOException, ParseException {
 
 //        // python scripts 경로와 main.py 경로 cmd로 실행 (윈도우 OS기준)
 //        String cmd = "/Users/Zagg/PycharmProjects/wanted_trend/venv/Scripts/python.exe /Users/Zagg/PycharmProjects/wanted_trend/main.py begin";
@@ -59,17 +67,15 @@ public class CrawlService {
         // java로 excel 읽어와서 DB에
         ExcelReader excelReader = new ExcelReader();
 
-        // String path = excelReader.getPath();
+        // String filename = (getPastDate(0) + ".xlsx").replace("-", "");
 
-        String tempPath = "C:/Users/Zagg/PycharmProjects/wanted_trend/excel/";
+        String filename = excelReader.getFilename("20220411"); // format : 20220407
 
-        String filename = excelReader.getFilename("wanted20220411_194705"); // 2022-04-07
-
-        List<PostResDto> dtoList = excelReader.readExcel(tempPath,filename);
+        List<PostResDto> dtoList = excelReader.readExcel(excelPath,filename);
 
 
         // DB 저장 (JPA)
-//        saveDB(dtoList);
+        saveDB(dtoList);
 
         // DB 분석 후 JSON 파일 저장
         databaseAnalyse(dtoList.size());
@@ -80,7 +86,7 @@ public class CrawlService {
         dtoList.forEach(postResDto -> {
             Long postId = postRepository.save(postResDto.toPostEntity()).getId();
             postRepository.findById(postId).ifPresent(post -> {
-                postResDto.getMainLang().forEach(lang -> {
+                postResDto.getMainLang().forEach(lang -> {  // ValidationChecker로 언어가 Nullable이라면 넣지않음
                     if(!ValidationChecker.isNull(lang)){
                         postLangRepository.save(postResDto.toPostLangEntity(post, lang, LangType.MAIN));
                     }
@@ -101,7 +107,7 @@ public class CrawlService {
 
     // DB 분석
 //    @Scheduled(cron = "0/10 0 0 * * *")
-    public void databaseAnalyse(int updatedCnt) throws IOException {
+    public void databaseAnalyse(int updatedCnt) throws IOException, ParseException {
 
         Gson gson = new Gson();
 
@@ -139,9 +145,11 @@ public class CrawlService {
                                     .topLangInfo(topLangInfoJson)
                                     .top3LangTrend(top3LangTrend)
                                     .build();
+        // filename (ex 20220413.json)
+        String filename = (getPastDate(0) + ".json").replace("-", "");
 
-        // create a writer
-        Writer writer = Files.newBufferedWriter(Paths.get("C:\\Users\\Zagg\\Desktop\\test\\test.json"));
+        // create a writer & path
+        Writer writer = Files.newBufferedWriter(Paths.get(jsonPath + filename));
 
         // convert user object to JSON file
         gson.toJson(json, writer);
@@ -175,9 +183,12 @@ public class CrawlService {
 
         TopLangInfoJson resultJson = new TopLangInfoJson();
 
-        totalLangCnt.getData().keySet().forEach(langType -> {
+        totalLangCnt.getData().keySet().forEach(langType -> {   // totalLangCount keyset() -> [main, requirement, prefer]
+
+            // values (언어 수) 총합
             Long totalCount = totalLangCnt.getData().get(langType).values().stream().mapToLong(v -> v).sum();
 
+            // values (언어 수) 가 가장 높은 언어를 찾고 TopLangInfo 만들어서 resultJson에 put
             Optional<Map.Entry<String, Long>> maxEntry = totalLangCnt.getData().get(langType).entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
             maxEntry.ifPresent(max -> {
                 String bestLang = max.getKey();
