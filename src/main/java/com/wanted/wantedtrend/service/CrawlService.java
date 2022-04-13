@@ -3,10 +3,7 @@ package com.wanted.wantedtrend.service;
 import com.google.gson.Gson;
 import com.wanted.wantedtrend.enumerate.Lang;
 import com.wanted.wantedtrend.enumerate.LangType;
-import com.wanted.wantedtrend.json.Top3LangTrend;
-import com.wanted.wantedtrend.json.TopLangInfo;
-import com.wanted.wantedtrend.json.TotalLangCnt;
-import com.wanted.wantedtrend.json.WantedMainJsonFormat;
+import com.wanted.wantedtrend.json.*;
 import com.wanted.wantedtrend.repository.PostLangRepository;
 import com.wanted.wantedtrend.repository.PostRepository;
 import com.wanted.wantedtrend.utils.ExcelReader;
@@ -111,17 +108,17 @@ public class CrawlService {
         String title = "메인의 JSON 입니다";
 
         // 메인의 pie chart data set
-        List<TotalLangCnt> totalLangCnts = getTotalLangCnts();
+        TotalLangCnt totalLangCnt = getTotalLangCnts();
 
         // < 타입 , < 언어 , < 날짜, 개수 > > > map
-        Map<LangType, Map<Lang, Map<String, Integer>>> top3LangTrendMap = new LinkedHashMap<>();
+        Map<LangType, Map<String, Map<String, Integer>>> top3LangTrendMap = new LinkedHashMap<>();
 
         // 사이드 chart data set (날짜별 data)
-        totalLangCnts.forEach(obj -> {
+        totalLangCnt.getData().keySet().forEach(obj -> {
 
-            LangType langType = obj.getLangType();  // main, requirement, prefer
+            LangType langType = obj;  // main, requirement, prefer
 
-            top3LangTrendMap.put(langType, createTop3Map(obj));
+            top3LangTrendMap.put(langType, createTop3Map(langType, totalLangCnt));
         });
 
         // 타입별 top3 lang data for side
@@ -129,7 +126,7 @@ public class CrawlService {
 
 
         // 타입별 top lang chart data set
-        List<TopLangInfo> topLangInfo = getTopLangInfo(totalLangCnts);
+        TopLangInfoJson topLangInfoJson = getTopLangInfo(totalLangCnt);
 
 
         // 저장할 json format class
@@ -138,8 +135,8 @@ public class CrawlService {
         json = WantedMainJsonFormat.builder()
                                     .title(title)
                                     .updatedCnt(updatedCnt)
-                                    .totalLangCntList(totalLangCnts)
-                                    .topLangInfo(topLangInfo)
+                                    .totalLangCnt(totalLangCnt)
+                                    .topLangInfo(topLangInfoJson)
                                     .top3LangTrend(top3LangTrend)
                                     .build();
 
@@ -154,69 +151,59 @@ public class CrawlService {
     }
 
     // 메인의 pie chart data
-    public List<TotalLangCnt> getTotalLangCnts() {
+    public TotalLangCnt getTotalLangCnts() {
+
+        Map<LangType,Map<String, Long>> totalLangCntMap = new LinkedHashMap<>();
+
         // LangType 별 repository 호출 및 저장
-        List<TotalLangCnt> totalLangCnts = new ArrayList<>();
         List<LangType> langTypes = Arrays.asList(LangType.values());
         langTypes.forEach(type -> {
-
-            // 메인의 pie chart data for JSON
-            TotalLangCnt totalLangCnt = new TotalLangCnt();
-
-            totalLangCnt.setLangType(type);
-
+            // <언어, 개수>
+            Map<String, Long> langCountMap = new LinkedHashMap<>();
             List<CountTypeLangDto> list = postLangRepository.countPostLangByTypeAndLang(type);
             list.forEach(data -> {
-                totalLangCnt.put(data.getLang().getLangName(), data.getCount());
+                langCountMap.put(data.getLang().getLangName(), data.getCount());
             });
 
-            totalLangCnts.add(totalLangCnt);
+            totalLangCntMap.put(type, langCountMap);
         });
-
-        return totalLangCnts;
+        return new TotalLangCnt(totalLangCntMap);
     }
 
     // type별 best 언어와 n% of the total 데이터
-    public List<TopLangInfo> getTopLangInfo(List<TotalLangCnt> totalLangCnts) {
+    public TopLangInfoJson getTopLangInfo(TotalLangCnt totalLangCnt) {
 
-        // 결과 list
-        List<TopLangInfo> result = new ArrayList<>();
+        TopLangInfoJson resultJson = new TopLangInfoJson();
 
-        totalLangCnts.forEach(type -> {
-            // 언어 총계
-            Long totalCount = type.getStatistics().values().stream().mapToLong(v -> v).sum();
-            // 가장 많은 공고를 보유한 언어와 개수 필터
-            Optional<Map.Entry<String, Long>> maxEntry =
-                    type.getStatistics().entrySet()
-                                        .stream()
-                                        .max(Comparator.comparing(Map.Entry::getValue));
+        totalLangCnt.getData().keySet().forEach(langType -> {
+            Long totalCount = totalLangCnt.getData().get(langType).values().stream().mapToLong(v -> v).sum();
+
+            Optional<Map.Entry<String, Long>> maxEntry = totalLangCnt.getData().get(langType).entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
             maxEntry.ifPresent(max -> {
-                String best = max.getKey();
+                String bestLang = max.getKey();
                 Long stack = max.getValue();
 
-                // List에 넣을 객체 생성
                 TopLangInfo topLangInfo = TopLangInfo.builder()
-                                                     .type(type.getLangType())
-                                                     .lang(best)
+                                                     .lang(bestLang)
                                                      .stacks(stack)
                                                      .totalCounts(totalCount)
                                                      .build();
-                result.add(topLangInfo);
+
+                resultJson.put(langType, topLangInfo);
             });
         });
-        return result;
+
+        return resultJson;
     }
 
     // 타입별 top3 언어의 최근날짜 데이터 가져오기
-    public Map<Lang, Map<String, Integer>> createTop3Map(TotalLangCnt obj) {
+    public Map<String, Map<String, Integer>> createTop3Map(LangType langType, TotalLangCnt obj) {
         // <프로그래밍언어, <날짜, 개수>>
-        Map<Lang, Map<String, Integer>> langMap = new LinkedHashMap<>();
+        Map<String, Map<String, Integer>> langMap = new LinkedHashMap<>();
 
         // 공고 개수를 기준으로 내림차순 정렬
-        List<Map.Entry<String, Long>> list = obj.getStatistics().entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
+        List<Map.Entry<String, Long>> list = obj.getData().get(langType).entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
         Collections.reverse(list);
-
-        LangType langType = obj.getLangType();  // main, requirement, prefer
 
         // 해당 langType의 top3 인기언어 (top3 기준날짜는 오늘)
         for(int i = 0; i < 3; i++) {
@@ -249,7 +236,7 @@ public class CrawlService {
                 }
             }
 
-            langMap.put(lang, map);
+            langMap.put(lang.getLangName(), map);
         }
 
         return langMap;
