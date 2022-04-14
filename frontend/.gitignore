@@ -39,6 +39,7 @@ out/
 ### Custom ###
 frontend/node_modules
 
+/
 config.yml
 application.properties
 application.yml
