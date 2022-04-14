@@ -12,5 +12,6 @@ public class WantedMainJsonFormat {
     private TotalLangCnt totalLangCnt; // 메인의 pie chart data (Today 기준 언어별 count data)
     private TopLangInfoJson topLangInfo;    // LangType별 메인 <가장 인기있는 언어, % of total>
     private Top3LangTrend top3LangTrend;
+    private LangColor langColor;
 
 }

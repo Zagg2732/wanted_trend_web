@@ -39,7 +39,7 @@ public class CrawlService {
     private final PostLangRepository postLangRepository;
 
     // test code - crawl 호출, 추후 schedular 로 동작 //
-    @Scheduled(cron = "0 18 16 * * *")
+    @Scheduled(cron = "0 52 11 * * *")
 //    @Scheduled(cron = "0/20 * * * * *")
     public void crawl() throws IOException, ParseException {
 
@@ -78,7 +78,7 @@ public class CrawlService {
         saveDB(dtoList);
 
         // DB 분석 후 JSON 파일 저장
-        databaseAnalyse(dtoList.size());
+        databaseAnalyseToJson(dtoList.size());
     }
 
     // PostResDto List 정보를 DB에 저장
@@ -107,7 +107,7 @@ public class CrawlService {
 
     // DB 분석
 //    @Scheduled(cron = "0/10 0 0 * * *")
-    public void databaseAnalyse(int updatedCnt) throws IOException, ParseException {
+    public void databaseAnalyseToJson(int updatedCnt) throws IOException, ParseException {
 
         Gson gson = new Gson();
 
@@ -144,6 +144,7 @@ public class CrawlService {
                                     .totalLangCnt(totalLangCnt)
                                     .topLangInfo(topLangInfoJson)
                                     .top3LangTrend(top3LangTrend)
+                                    .langColor(new LangColor())
                                     .build();
         // filename (ex 20220413.json)
         String filename = (getPastDate(0) + ".json").replace("-", "");
@@ -170,7 +171,7 @@ public class CrawlService {
             Map<String, Long> langCountMap = new LinkedHashMap<>();
             List<CountTypeLangDto> list = postLangRepository.countPostLangByTypeAndLang(type);
             list.forEach(data -> {
-                langCountMap.put(data.getLang().getLangName(), data.getCount());
+                langCountMap.put(data.getLang().getLangName(), data.getLangCount());
             });
 
             totalLangCntMap.put(type, langCountMap);
@@ -240,7 +241,7 @@ public class CrawlService {
                     if(dto == null) { continue;}
                     else {
                         dtoCounts++;
-                        map.put(dto.getDate(), dto.getCount());
+                        map.put(dto.getDate(), dto.getLangCount());
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
