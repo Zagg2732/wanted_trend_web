@@ -1,4 +1,4 @@
-package com.wanted.wantedtrend.service;
+package com.wanted.wantedtrend.scheduled_service;
 
 import com.google.gson.Gson;
 import com.wanted.wantedtrend.enumerate.Lang;
@@ -29,22 +29,35 @@ import java.util.stream.Collectors;
 public class CrawlService {
 
     // get value from application.properties
-    @Value("${path.save.wanted_json}")
-    private String jsonPath;
+    @Value("${path.refresh.wanted_json}")
+    private String jsonRefreshPath;
+
+    @Value("${path.logging.wanted_json}")
+    private String jsonLoggingPath;
 
     @Value("${path.load.wanted_excel}")
     private String excelPath;
+
+    @Value("${path.load.python_scripts}")
+    private String pythonScripts;
+
+    @Value("${path.load.python_main}")
+    private String pythonMain;
+
+    @Value("${path.load.python_crawl_command}")
+    private String pythonCommand;
+
 
     private final PostRepository postRepository;
     private final PostLangRepository postLangRepository;
 
     // test code - crawl 호출, 추후 schedular 로 동작 //
-    @Scheduled(cron = "0 52 11 * * *")
+    @Scheduled(cron = "0 10 4 * * *")
 //    @Scheduled(cron = "0/20 * * * * *")
-    public void crawl() throws IOException, ParseException {
+    public void crawl() throws IOException, ParseException, InterruptedException {
 
 //        // python scripts 경로와 main.py 경로 cmd로 실행 (윈도우 OS기준)
-//        String cmd = "/Users/Zagg/PycharmProjects/wanted_trend/venv/Scripts/python.exe /Users/Zagg/PycharmProjects/wanted_trend/main.py begin";
+//        String cmd = String.format("%s %s %s", pythonScripts, pythonMain, pythonCommand); // python.exe main.py daily
 //
 //        Process process = Runtime.getRuntime().exec("cmd /c " + cmd);
 //
@@ -60,25 +73,24 @@ public class CrawlService {
 //        while ((line = reader.readLine()) != null) {
 //            sb.append(line);
 //        }
-
+//
 //        // excel 저장까지 좀 기다리기
 //        Thread.sleep(10000);
-//
+
         // java로 excel 읽어와서 DB에
         ExcelReader excelReader = new ExcelReader();
 
-        // String filename = (getPastDate(0) + ".xlsx").replace("-", "");
+        String today = getPastDate(0).replace("-", "");
 
-        String filename = excelReader.getFilename("20220411"); // format : 20220407
+        String filename = excelReader.getFilename(today); // format : 20220407
 
         List<PostResDto> dtoList = excelReader.readExcel(excelPath,filename);
-
 
         // DB 저장 (JPA)
         saveDB(dtoList);
 
         // DB 분석 후 JSON 파일 저장
-        databaseAnalyseToJson(dtoList.size());
+        databaseAnalyseToJson();
     }
 
     // PostResDto List 정보를 DB에 저장
@@ -106,15 +118,21 @@ public class CrawlService {
     }
 
     // DB 분석
-//    @Scheduled(cron = "0/10 0 0 * * *")
-    public void databaseAnalyseToJson(int updatedCnt) throws IOException, ParseException {
+//    @Scheduled(cron = "0/10 * * * * *")
+    public void databaseAnalyseToJson() throws IOException, ParseException {
 
         Gson gson = new Gson();
 
         String title = "메인의 JSON 입니다";
 
+        String today = getPastDate(1);
+
+        // 새로운 공고 업데이트 개수 및 전일대비 증가수
+        int updatedCnt = postRepository.countByDate(getPastDate(1));
+        int comparedCnt = updatedCnt - postRepository.countByDate(getPastDate(2));
+
         // 메인의 pie chart data set
-        TotalLangCnt totalLangCnt = getTotalLangCnts();
+        TotalLangCnt totalLangCnt = getTotalLangCnts(today);
 
         // < 타입 , < 언어 , < 날짜, 개수 > > > map
         Map<LangType, Map<String, Map<String, Integer>>> top3LangTrendMap = new LinkedHashMap<>();
@@ -141,6 +159,7 @@ public class CrawlService {
         json = WantedMainJsonFormat.builder()
                                     .title(title)
                                     .updatedCnt(updatedCnt)
+                                    .comparedCnt(comparedCnt)
                                     .totalLangCnt(totalLangCnt)
                                     .topLangInfo(topLangInfoJson)
                                     .top3LangTrend(top3LangTrend)
@@ -150,17 +169,20 @@ public class CrawlService {
         String filename = (getPastDate(0) + ".json").replace("-", "");
 
         // create a writer & path
-        Writer writer = Files.newBufferedWriter(Paths.get(jsonPath + filename));
+        Writer refreshJson = Files.newBufferedWriter(Paths.get(jsonRefreshPath + "chart_data.json")); // @\frontend\src\assets\jsons\chart_data.json 덮어씌워서 갱신
+        Writer loggingJson = Files.newBufferedWriter(Paths.get(jsonLoggingPath + filename));   // @\json_logs 에 20220401.json 와같이 json 저장
 
         // convert user object to JSON file
-        gson.toJson(json, writer);
+        gson.toJson(json, refreshJson);
+        gson.toJson(json, loggingJson);
 
         // close writer
-        writer.close();
+        refreshJson.close();
+        loggingJson.close();
     }
 
     // 메인의 pie chart data
-    public TotalLangCnt getTotalLangCnts() {
+    public TotalLangCnt getTotalLangCnts(String today) {
 
         Map<LangType,Map<String, Long>> totalLangCntMap = new LinkedHashMap<>();
 
@@ -169,7 +191,9 @@ public class CrawlService {
         langTypes.forEach(type -> {
             // <언어, 개수>
             Map<String, Long> langCountMap = new LinkedHashMap<>();
-            List<CountTypeLangDto> list = postLangRepository.countPostLangByTypeAndLang(type);
+            List<CountTypeLangDto> list = postLangRepository.countPostLangByTypeAndLang(type, today);
+            // 공고가없다면 넘어감
+            if(list.size() == 0) {return;}
             list.forEach(data -> {
                 langCountMap.put(data.getLang().getLangName(), data.getLangCount());
             });
@@ -222,7 +246,7 @@ public class CrawlService {
 
             Lang lang = null;  // Lang
             try { lang = Lang.ofLangCode(list.get(i).getKey()); }
-            catch (Exception e) { e.printStackTrace(); }
+            catch (Exception e) { e.printStackTrace(); continue; }
 
             // Map<날짜, 개수>
             Map<String, Integer> map = new LinkedHashMap<>();
@@ -231,7 +255,7 @@ public class CrawlService {
             int howPast = 0;
             while (dtoCounts < 7 && howPast < 20) {
                 try {
-                    String date = getPastDate(howPast);
+                    String date = getPastDate(howPast - 1);
                     howPast++;
 
                     // countRecentPostLang(타입, 날짜, 언어)

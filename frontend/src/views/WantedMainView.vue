@@ -1,11 +1,6 @@
 <template>
   <div>
     <main id="main" class="main">
-
-      <!--      <div class="pagetitle">
-              <h1>Title here</h1>
-            </div>&lt;!&ndash; End Page Title &ndash;&gt;-->
-
       <section class="section dashboard">
         <div class="row">
 
@@ -40,11 +35,10 @@
                         </svg>
                       </div>
                       <div class="ps-3">
-                        <h6>145</h6>
+                        <h6>{{card.updated.today}}</h6>
                         <span class="text-muted small pt-2 ps-1">전일대비 </span><span
-                          class="text-success small pt-1 fw-bold">250</span> <span
+                          class="text-success small pt-1 fw-bold">{{card.updated.compare}}</span> <span
                           class="text-muted small pt-2 ps-1">증가</span>
-
                       </div>
                     </div>
                   </div>
@@ -70,7 +64,7 @@
                   </div>
 
                   <div class="card-body">
-                    <h5 class="card-title">자격 요건<span> | Today</span></h5>
+                    <h5 class="card-title">자격요건<span> | Today</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -80,8 +74,8 @@
                         </svg>
                       </div>
                       <div class="ps-3">
-                        <h6>Java</h6>
-                        <span class="text-success small pt-1 fw-bold">8%</span> <span
+                        <h6>{{card.topRequirement.lang}}</h6>
+                        <span class="text-success small pt-1 fw-bold">{{card.topRequirement.share}}%</span> <span
                           class="text-muted small pt-2 ps-1">of the total</span>
 
                       </div>
@@ -96,21 +90,8 @@
 
                 <div class="card info-card customers-card">
 
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
-
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                  </div>
-
                   <div class="card-body">
-                    <h5 class="card-title">우대 사항 <span>| Today</span></h5>
+                    <h5 class="card-title">우대사항 <span>| Today</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -120,8 +101,8 @@
                         </svg>
                       </div>
                       <div class="ps-3">
-                        <h6>C#</h6>
-                        <span class="text-danger small pt-1 fw-bold">12%</span> <span
+                        <h6>{{card.topPrefer.lang}}</h6>
+                        <span class="text-danger small pt-1 fw-bold">{{card.topPrefer.share}}%</span> <span
                           class="text-muted small pt-2 ps-1">of the total</span>
 
                       </div>
@@ -135,20 +116,6 @@
               <!-- Reports -->
               <div class="col-12">
                 <div class="card">
-
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
-
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                  </div>
-
                   <div class="card-body">
                     <h5 class="card-title">Reports <span>/Today</span></h5>
 
@@ -162,225 +129,39 @@
                 </div>
               </div><!-- End Reports -->
 
-              <!-- Recent Sales -->
-              <div class="col-12">
-                <div class="card recent-sales overflow-auto">
-
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
-
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                  </div>
-
-                  <div class="card-body">
-                    <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                    <table class="table table-borderless datatable">
-                      <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Status</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td>Brandon Jacob</td>
-                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                        <td>$64</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2147</a></th>
-                        <td>Bridie Kessler</td>
-                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                        <td>$47</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2049</a></th>
-                        <td>Ashleigh Langosh</td>
-                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                        <td>$147</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Angus Grady</td>
-                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                        <td>$67</td>
-                        <td><span class="badge bg-danger">Rejected</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Raheem Lehner</td>
-                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                        <td>$165</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      </tbody>
-                    </table>
-
-                  </div>
-
-                </div>
-              </div><!-- End Recent Sales -->
-
-              <!-- Top Selling -->
-              <div class="col-12">
-                <div class="card top-selling overflow-auto">
-
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
-
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                  </div>
-
-                  <div class="card-body pb-0">
-                    <h5 class="card-title">Top Selling <span>| Today</span></h5>
-
-                    <table class="table table-borderless">
-                      <thead>
-                      <tr>
-                        <th scope="col">Preview</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Sold</th>
-                        <th scope="col">Revenue</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                        <td>$64</td>
-                        <td class="fw-bold">124</td>
-                        <td>$5,828</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Exercitationem similique doloremque</a></td>
-                        <td>$46</td>
-                        <td class="fw-bold">98</td>
-                        <td>$4,508</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Doloribus nisi exercitationem</a></td>
-                        <td>$59</td>
-                        <td class="fw-bold">74</td>
-                        <td>$4,366</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum error</a></td>
-                        <td>$32</td>
-                        <td class="fw-bold">63</td>
-                        <td>$2,016</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                        <td>$79</td>
-                        <td class="fw-bold">41</td>
-                        <td>$3,239</td>
-                      </tr>
-                      </tbody>
-                    </table>
-
-                  </div>
-
-                </div>
-              </div><!-- End Top Selling -->
-
             </div>
           </div><!-- End Left side columns -->
 
           <!-- Right side columns -->
           <div class="col-lg-4">
 
-            <!-- Recent Activity -->
+            <!-- Sidebar charts -->
             <div class="card">
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">주요업무 <span>| 트렌드</span></h5>
+                <h5 class="card-title-chart">주요업무 <span>| Top3</span></h5>
                 <!-- Apex Chart -->
                 <apexchart :options="sideChart1.chartOptions" :series="sideChart1.series"/>
               </div>
-            </div><!-- End Recent Activity -->
+            </div>
+            <!-- End Sidebar charts -->
 
             <!-- Recent Activity -->
             <div class="card">
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">자격요건 <span>| 트렌드</span></h5>
+                <h5 class="card-title-chart">자격요건 <span>| Top3</span></h5>
                 <!-- Apex Chart -->
-                <apexchart :options="sideChart1.chartOptions" :series="sideChart1.series"/>
+                <apexchart :options="sideChart2.chartOptions" :series="sideChart2.series"/>
               </div>
             </div><!-- End Recent Activity -->
 
             <!-- Budget Report -->
             <div class="card">
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body pb-0">
-                <h5 class="card-title">우대사항 <span> | 트렌드</span></h5>
+              <div class="card-body">
+                <h5 class="card-title-chart">우대사항 <span> | Top3</span></h5>
 
                 <div id="budgetChart" class="echart">
                   <!-- Apex Chart -->
-                  <apexchart :options="sideChart2.chartOptions" :series="sideChart2.series"/>
+                  <apexchart :options="sideChart3.chartOptions" :series="sideChart3.series"/>
                 </div>
 
               </div>
@@ -397,7 +178,8 @@
 </template>
 
 <script>
-import mixins from "@/mixins";
+import mixins from '@/mixins'
+import jsonData from '@/assets/jsons/chart_data.json'
 
 export default {
   name: "WantedMainView", //컴포넌트 이름
@@ -405,128 +187,173 @@ export default {
   mixins : [mixins],
   data() { //html과 js코드에서 사용할 데이터 변수 선언
     return {
-      mainChart: '',
-      sideChart1: '',
-      sideChart2: '',
-      testHello:''
+      card : {
+        updated : {
+          today : 0,
+          compare : 0
+        },
+        topRequirement : {
+          lang : '',
+          share : 0.0
+        },
+        topPrefer : {
+          lang : '',
+          share : 0.0
+        }
+      },
     };
   },
   setup() {
   }, //컴포지션 API
   created() {
+    this.initCard()
     this.initChart()
-    this.testApiCallByMixins()
   }, //컴포넌트가 생성되면 실행
   mounted() {
+
   }, //template에 정의된 html 코드가 랜더링된 후 실행
   unmounted() {
   }, //unmount가 완료된 후 실행
   methods: {
-    async testApiCallByMixins() {
-      console.log(process.env)
-      this.testHello = await this.$api('/api/v1/hello', 'get')
-      console.log(this.testHello)
-      alert(this.testHello)
+    // async apiCallByMixins() {
+    //   // this.testHello = await this.$api('/api/v1/hello', 'get')
+    // },
+    initCard(){
+      // 업데이트
+      this.card.updated.today = jsonData.updatedCnt;
+      this.card.updated.compare = jsonData.comparedCnt;
+
+      // 자격요건
+      this.card.topRequirement.lang = jsonData.topLangInfo.data.REQUIREMENT.lang
+      this.card.topRequirement.lang = this.card.topRequirement.lang.toUpperCase()
+      this.card.topRequirement.share = jsonData.topLangInfo.data.REQUIREMENT.share
+
+      // 우대사항
+      this.card.topPrefer.lang = jsonData.topLangInfo.data.PREFER.lang
+      this.card.topPrefer.lang = this.card.topPrefer.lang.toUpperCase()
+      this.card.topPrefer.share = jsonData.topLangInfo.data.PREFER.share
     },
     initChart() { // 차트 init
       // vue3-apex charts for pie example from https://apexcharts.com/vue-chart-demos/pie-charts/simple-pie-chart/
-      // main chart
 
-//TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA / TEST DATA//
+      // main chart
+      let mainChartSeries = Object.values(jsonData.totalLangCnt.data.REQUIREMENT)
+      let mainChartLabels = Object.keys(jsonData.totalLangCnt.data.REQUIREMENT)
+      let mainChartColors = []
+      mainChartLabels.forEach(key => mainChartColors.push(jsonData.langColor.data[key]))
+
       this.mainChart = {
-        series: [44, 55, 13, 43, 22],
+        series: mainChartSeries,
         chartOptions: {
+          colors :mainChartColors,
           chart: {
             type: 'pie'
           },
-          labels: ['1', '2', '3', '4', '5']
-        }
-      }
-
-      // side chart
-      this.sideChart1 = {
-        series: [
-          {
-           name: "Java",
-           data: [80, 90, 100, 110, 120, 100, 150, 140, 140]
-          },
-          {
-           name: "C",
-           data: [30, 45, 50, 50, 60, 45, 67, 55, 70]
-          }
-        ],
-        chartOptions: {
-          chart: {
-            height: 350,
-            type: 'area',
-            zoom: {
-              enabled: false
-            }
-          },
+          labels: mainChartLabels,
           dataLabels: {
-            enabled: false
-          },
-          colors: ['#4154f1', '#2eca6a', '#ff771d'],
-          markers:{
-            size: 4
-          },
-          stroke: {
-            curve: 'smooth',
-            width: 2
-          },
-          grid: {
-            row: {
-              colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-              opacity: 0.5
-            },
-          },
-          xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-          }
-        }
-      }
-
-      this.sideChart2 = {
-        series: [
-          {
-           name: "Java",
-           data: [80, 90, 100, 110, 120, 100, 150, 140, 140]
-          },
-          {
-           name: "C",
-           data: [30, 45, 50, 50, 60, 45, 67, 55, 70]
-          }
-        ],
-        chartOptions: {
-          chart: {
-            height: 350,
-            type: 'line',
-            zoom: {
-              enabled: false
+            formatter(val, opts) {
+              const name = opts.w.globals.labels[opts.seriesIndex]
+              return [name, val.toFixed(1) + '%']
             }
-          },
-          dataLabels: {
-            enabled: true
-          },
-          stroke: {
-            curve: 'straight'
-          },
-          grid: {
-            row: {
-              colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-              opacity: 0.5
-            },
-          },
-          xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
           }
         }
       }
 
+      // side chart 의 날짜 만들기 function (langType = java, python ..., firstLang = langType 의 첫번째 언어)
+      function createDates(langType, firstLang) {
+        let mainDate = ''
+        let leftDates = []
 
+        Object.keys(jsonData.top3LangTrend.data[langType][firstLang]).forEach(function (dates, index, array){
+              if (index == array.length - 1) { mainDate = dates.substr(5).replace('-', '/')} // 2021-04-01 -> 04/01
+              else {
+                let day = dates.substr(8)
+                day = day[0] == '0' ? day.substr(1) : day  // 날짜 03 -> 3 으로 자름
+                leftDates.push(day)
+              }
+            }
+        )
+        mainDate =  mainDate[0] == '0' ? mainDate.substr(1) : mainDate  // 04/01 -> 4/01
+        mainDate = mainDate[mainDate.length - 2] == '0' ? mainDate.substr(0, mainDate.length-2) + mainDate.substr(mainDate.length - 1) : mainDate; // 4/01 -> 4/1
+
+        let result = leftDates.reverse()
+        result.unshift(mainDate)
+
+        return result // ['4/01', '2', '3', '4', ...]
+      }
+
+      // json 기반으로 chartData 만듦
+      function createChartDataList() {
+        let langTypeList = Object.keys(jsonData.top3LangTrend.data) // [main, requirement, prefer]
+
+        let result = []
+
+        langTypeList.forEach(langType => {
+          let dataSeries = []
+          let dataColors = []
+
+          let dataObj = jsonData.top3LangTrend.data[langType]
+
+          Object.keys(dataObj).forEach(lang => { // [java, python, c]
+            let obj = {name : lang, data : Object.values(dataObj[lang])} // data : [30, 25, 20]
+            dataSeries.push(obj)
+          })
+
+          // 언어별 컬러코드
+          Object.keys(dataObj).forEach(key => dataColors.push(jsonData.langColor.data[key]))
+
+          let dataDates = createDates(langType, dataSeries[0].name)
+
+          let chartData = {
+            series: dataSeries,
+            chartOptions: {
+              chart: {
+                height: 350,
+                type: 'area',
+                zoom: {
+                  enabled: false
+                },
+                toolbar: {
+                  show: false
+                }
+              },
+              dataLabels: {
+                enabled: false
+              },
+              colors: dataColors,
+              markers:{
+                size: 4
+              },
+              stroke: {
+                curve: 'smooth',
+                width: 2
+              },
+              grid: {
+                row: {
+                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                  opacity: 0.5
+                },
+              },
+              xaxis: {
+                categories: dataDates,
+              }
+            }
+          }
+
+          result.push(chartData)
+
+        })
+        return result
+      }
+
+      let chartDataList = createChartDataList();
+
+      this.sideChart1 = chartDataList[0]
+      this.sideChart2 = chartDataList[1]
+      this.sideChart3 = chartDataList[2]
 
     }
-  } //컴포넌트 내에서 사용할 메소드 정의
+  }
 }
 </script>
 
