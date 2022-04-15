@@ -52,32 +52,45 @@ public class CrawlService {
     private final PostLangRepository postLangRepository;
 
     // test code - crawl 호출, 추후 schedular 로 동작 //
-    @Scheduled(cron = "0 10 4 * * *")
-//    @Scheduled(cron = "0/20 * * * * *")
+    @Scheduled(cron = "0 2 2 * * *")
     public void crawl() throws IOException, ParseException, InterruptedException {
 
-//        // python scripts 경로와 main.py 경로 cmd로 실행 (윈도우 OS기준)
-//        String cmd = String.format("%s %s %s", pythonScripts, pythonMain, pythonCommand); // python.exe main.py daily
-//
-//        Process process = Runtime.getRuntime().exec("cmd /c " + cmd);
-//
-//        BufferedReader reader = new BufferedReader(
-//                new InputStreamReader(process.getInputStream()));
-//
-//        String line = null;
-//        StringBuffer sb = new StringBuffer();
-//
-//        sb.append(cmd);
-//
-//        // python crawl 종료
-//        while ((line = reader.readLine()) != null) {
-//            sb.append(line);
-//        }
-//
-//        // excel 저장까지 좀 기다리기
-//        Thread.sleep(10000);
+        System.out.println("스케줄링에 의해 crawl() 실행됨");
+
+        // python scripts 경로와 main.py 경로 cmd로 실행 (윈도우 OS기준)
+        String osCmd = "";
+
+        if (System.getProperty("os.name").indexOf("Windows") > -1) {    // 윈도우 환경에서 실행
+            osCmd = "cmd /c";
+        } else {                                                        // 리눅스 환경에서 실행
+            osCmd = "/bin/sh -c";
+        }
+
+        String pythonCmd = String.format("%s %s %s", pythonScripts, pythonMain, pythonCommand); // python.exe main.py daily
+
+        Process process = Runtime.getRuntime().exec(osCmd + pythonCmd);
+
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream()));
+
+        String line = null;
+        StringBuffer sb = new StringBuffer();
+
+        sb.append(pythonCmd);
+
+        System.out.println("python crwaling 진행중");
+
+        // python crawl 종료
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+
+        // excel 저장까지 좀 기다리기
+        System.out.println("python crwaling 종료. file생성 대기");
+        Thread.sleep(60000);
 
         // java로 excel 읽어와서 DB에
+        System.out.println("excel file read");
         ExcelReader excelReader = new ExcelReader();
 
         String today = getPastDate(0).replace("-", "");
@@ -88,9 +101,11 @@ public class CrawlService {
 
         // DB 저장 (JPA)
         saveDB(dtoList);
+        System.out.println("database 저장 완료");
 
         // DB 분석 후 JSON 파일 저장
         databaseAnalyseToJson();
+        System.out.println("json 저장 완료");
     }
 
     // PostResDto List 정보를 DB에 저장
@@ -118,7 +133,6 @@ public class CrawlService {
     }
 
     // DB 분석
-//    @Scheduled(cron = "0/10 * * * * *")
     public void databaseAnalyseToJson() throws IOException, ParseException {
 
         Gson gson = new Gson();
@@ -299,9 +313,4 @@ public class CrawlService {
 
         return result;
     }
-
-
-
-
-
 }
