@@ -33,18 +33,18 @@
               <!-- Revenue Card -->
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card revenue-card">
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
+<!--                  <div class="filter">-->
+<!--                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>-->
+<!--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
+<!--                      <li class="dropdown-header text-start">-->
+<!--                        <h6>Filter</h6>-->
+<!--                      </li>-->
 
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">Week</a></li>
-                      <li><a class="dropdown-item" href="#">Month</a></li>
-                    </ul>
-                  </div>
+<!--                      <li><a class="dropdown-item" href="#">Today</a></li>-->
+<!--                      <li><a class="dropdown-item" href="#">Week</a></li>-->
+<!--                      <li><a class="dropdown-item" href="#">Month</a></li>-->
+<!--                    </ul>-->
+<!--                  </div>-->
                   <div class="card-body">
                     <h5 class="card-title">자격요건<span> | Today</span></h5>
 
@@ -67,18 +67,18 @@
               <div class="col-xxl-4 col-xl-12">
 
                 <div class="card info-card customers-card">
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
+<!--                  <div class="filter">-->
+<!--                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>-->
+<!--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
+<!--                      <li class="dropdown-header text-start">-->
+<!--                        <h6>Filter</h6>-->
+<!--                      </li>-->
 
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">Week</a></li>
-                      <li><a class="dropdown-item" href="#">Month</a></li>
-                    </ul>
-                  </div>
+<!--                      <li><a class="dropdown-item" href="#">Today</a></li>-->
+<!--                      <li><a class="dropdown-item" href="#">Week</a></li>-->
+<!--                      <li><a class="dropdown-item" href="#">Month</a></li>-->
+<!--                    </ul>-->
+<!--                  </div>-->
                   <div class="card-body">
                     <h5 class="card-title">우대사항 <span>| Today</span></h5>
 
