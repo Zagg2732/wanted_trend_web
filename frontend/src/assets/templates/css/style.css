@@ -231,7 +231,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-title-chart {
-  padding: 5px 0 0 0;
+  padding: 15px 0 0 0;
   margin: 0 0 0 0;
   font-size: 18px;
   font-weight: 500;
@@ -253,6 +253,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .card-body {
   padding: 0 20px 20px 20px;
+}
+
+.card-body-chart {
+  padding: 0 20px 0px 20px;
 }
 
 .card-img-overlay {
@@ -707,6 +711,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 8px 15px;
 }
 .dashboard .filter .dropdown-header h6 {
+  text-align: center;
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 600;
@@ -717,6 +722,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .dashboard .filter .dropdown-item {
   padding: 8px 15px;
+  text-align: center;
 }
 
 /* Info Cards */

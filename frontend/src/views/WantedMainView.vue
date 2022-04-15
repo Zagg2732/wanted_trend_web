@@ -11,34 +11,18 @@
               <!-- Sales Card -->
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card sales-card">
-
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
-
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                  </div>
-
                   <div class="card-body">
                     <h5 class="card-title">업데이트 공고 <span>| Today</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pin-angle" viewBox="0 0 16 16">
-                          <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"/>
-                        </svg>
+                        <i class="bi bi-pin-angle"></i>
                       </div>
-                      <div class="ps-3">
+                      <div class="mx-auto">
                         <h6>{{card.updated.today}}</h6>
                         <span class="text-muted small pt-2 ps-1">전일대비 </span><span
                           class="text-success small pt-1 fw-bold">{{card.updated.compare}}</span> <span
-                          class="text-muted small pt-2 ps-1">증가</span>
+                          class="text-muted small pt-2 ps-1">{{card.updated.text}}</span>
                       </div>
                     </div>
                   </div>
@@ -49,34 +33,28 @@
               <!-- Revenue Card -->
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card revenue-card">
-
                   <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                       <li class="dropdown-header text-start">
                         <h6>Filter</h6>
                       </li>
 
                       <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                      <li><a class="dropdown-item" href="#">Week</a></li>
+                      <li><a class="dropdown-item" href="#">Month</a></li>
                     </ul>
                   </div>
-
                   <div class="card-body">
                     <h5 class="card-title">자격요건<span> | Today</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-stack" viewBox="0 0 16 16">
-                          <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z"/>
-                          <path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.659z"/>
-                        </svg>
+                        <i class="bi bi-stack"></i>
                       </div>
-                      <div class="ps-3">
+                      <div class="mx-auto">
                         <h6>{{card.topRequirement.lang}}</h6>
-                        <span class="text-success small pt-1 fw-bold">{{card.topRequirement.share}}%</span> <span
-                          class="text-muted small pt-2 ps-1">of the total</span>
+                        <span class="text-success small pt-1 fw-bold">{{card.topRequirement.share}}%</span>
 
                       </div>
                     </div>
@@ -89,7 +67,18 @@
               <div class="col-xxl-4 col-xl-12">
 
                 <div class="card info-card customers-card">
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>Filter</h6>
+                      </li>
 
+                      <li><a class="dropdown-item" href="#">Today</a></li>
+                      <li><a class="dropdown-item" href="#">Week</a></li>
+                      <li><a class="dropdown-item" href="#">Month</a></li>
+                    </ul>
+                  </div>
                   <div class="card-body">
                     <h5 class="card-title">우대사항 <span>| Today</span></h5>
 
@@ -100,10 +89,9 @@
                           <path d="M3.857 13.145h7.137v-1.428H3.857v1.428zM10.254 0 9.108.852l4.26 5.727 1.146-.852L10.254 0zm-3.54 3.377 5.484 4.567.913-1.097L7.627 2.28l-.914 1.097zM4.922 6.55l6.47 3.013.603-1.294-6.47-3.013-.603 1.294zm-.925 3.344 6.985 1.469.294-1.398-6.985-1.468-.294 1.397z"/>
                         </svg>
                       </div>
-                      <div class="ps-3">
+                      <div class="mx-auto">
                         <h6>{{card.topPrefer.lang}}</h6>
-                        <span class="text-danger small pt-1 fw-bold">{{card.topPrefer.share}}%</span> <span
-                          class="text-muted small pt-2 ps-1">of the total</span>
+                        <span class="text-danger small pt-1 fw-bold">{{card.topPrefer.share}}%</span>
 
                       </div>
                     </div>
@@ -113,11 +101,11 @@
 
               </div><!-- End Customers Card -->
 
-              <!-- Reports -->
+              <!-- Main pie-chart -->
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">Reports <span>/Today</span></h5>
+                    <h5 class="card-title">Total <span>/자격요건</span></h5>
 
                     <!-- Line Chart -->
                     <div id="reportsChart">
@@ -137,7 +125,7 @@
 
             <!-- Sidebar charts -->
             <div class="card">
-              <div class="card-body">
+              <div class="card-body-chart">
                 <h5 class="card-title-chart">주요업무 <span>| Top3</span></h5>
                 <!-- Apex Chart -->
                 <apexchart :options="sideChart1.chartOptions" :series="sideChart1.series"/>
@@ -147,7 +135,7 @@
 
             <!-- Recent Activity -->
             <div class="card">
-              <div class="card-body">
+              <div class="card-body-chart">
                 <h5 class="card-title-chart">자격요건 <span>| Top3</span></h5>
                 <!-- Apex Chart -->
                 <apexchart :options="sideChart2.chartOptions" :series="sideChart2.series"/>
@@ -156,7 +144,7 @@
 
             <!-- Budget Report -->
             <div class="card">
-              <div class="card-body">
+              <div class="card-body-chart">
                 <h5 class="card-title-chart">우대사항 <span> | Top3</span></h5>
 
                 <div id="budgetChart" class="echart">
@@ -189,8 +177,9 @@ export default {
     return {
       card : {
         updated : {
-          today : 0,
-          compare : 0
+          today : 0,    // 오늘 업데이트 공고
+          compare : 0,  // 전날과 비교한 업데이트 공고 증감
+          text : ''     // 증가 / 감소 text
         },
         topRequirement : {
           lang : '',
@@ -220,8 +209,10 @@ export default {
     // },
     initCard(){
       // 업데이트
-      this.card.updated.today = jsonData.updatedCnt;
-      this.card.updated.compare = jsonData.comparedCnt;
+      this.card.updated.today = jsonData.updatedCnt
+      this.card.updated.compare = Math.abs(jsonData.comparedCnt)
+      this.card.updated.text = jsonData.comparedCnt >= 0 ? '증가' : '감소'
+
 
       // 자격요건
       this.card.topRequirement.lang = jsonData.topLangInfo.data.REQUIREMENT.lang
@@ -351,7 +342,6 @@ export default {
       this.sideChart1 = chartDataList[0]
       this.sideChart2 = chartDataList[1]
       this.sideChart3 = chartDataList[2]
-
     }
   }
 }
