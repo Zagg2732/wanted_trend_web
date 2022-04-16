@@ -58,17 +58,19 @@ public class CrawlService {
         System.out.println("스케줄링에 의해 crawl() 실행됨");
 
         // python scripts 경로와 main.py 경로 cmd로 실행 (윈도우 OS기준)
-        String osCmd = "";
-
-        if (System.getProperty("os.name").indexOf("Windows") > -1) {    // 윈도우 환경에서 실행
-            osCmd = "cmd /c";
-        } else {                                                        // 리눅스 환경에서 실행
-            osCmd = "/bin/sh -c";
-        }
-
         String pythonCmd = String.format("%s %s %s", pythonScripts, pythonMain, pythonCommand); // python.exe main.py daily
 
-        Process process = Runtime.getRuntime().exec(osCmd + pythonCmd);
+        Process process = null;
+
+        if (System.getProperty("os.name").indexOf("Windows") > -1) {    // 윈도우 환경에서 실행
+            String windowsCmd = "cmd /c";
+            process = Runtime.getRuntime().exec(windowsCmd + pythonCmd);
+        } else {                                                        // 리눅스 환경에서 실행
+            String[] linuxCmd = {"/bin/sh","-c", pythonCmd};
+            process = Runtime.getRuntime().exec(linuxCmd);
+        }
+
+
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
@@ -98,6 +100,10 @@ public class CrawlService {
         String filename = excelReader.getFilename(today); // format : 20220407
 
         List<PostResDto> dtoList = excelReader.readExcel(excelPath,filename);
+        if (dtoList == null){
+            System.out.println("excel file not found error : 주말, 공휴일 등으로 IT 공고가 0건이거나, python error 입니다.");
+            return;
+        }
 
         // DB 저장 (JPA)
         saveDB(dtoList);
@@ -143,6 +149,7 @@ public class CrawlService {
 
         // 새로운 공고 업데이트 개수 및 전일대비 증가수
         int updatedCnt = postRepository.countByDate(getPastDate(1));
+        if(updatedCnt == 0) { return;}  // 주말, 공휴일같은경우 공고가 없을수있음. 갱신 x
         int comparedCnt = updatedCnt - postRepository.countByDate(getPastDate(2));
 
         // 메인의 pie chart data set
