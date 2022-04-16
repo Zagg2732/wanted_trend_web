@@ -178,6 +178,7 @@ public class CrawlService {
         WantedMainJsonFormat json;
 
         json = WantedMainJsonFormat.builder()
+                                    .date(today)
                                     .title(title)
                                     .updatedCnt(updatedCnt)
                                     .comparedCnt(comparedCnt)

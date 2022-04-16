@@ -7,6 +7,7 @@ import lombok.Getter;
 @Builder
 public class WantedMainJsonFormat {
 
+    private String date;
     private String title;
     private int updatedCnt;  // 새로운 업데이트 공고 개수
     private int comparedCnt; // 이전과 새로운 업데이트 공고 개수의 차이

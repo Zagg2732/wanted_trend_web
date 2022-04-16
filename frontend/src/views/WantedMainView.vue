@@ -12,7 +12,7 @@
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card sales-card">
                   <div class="card-body">
-                    <h5 class="card-title">업데이트 공고 <span>| Today</span></h5>
+                    <h5 class="card-title">업데이트 공고 <span>| {{ recentDate }}</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -47,7 +47,7 @@
 <!--                    </ul>-->
 <!--                  </div>-->
                   <div class="card-body">
-                    <h5 class="card-title">자격요건<span> | Today</span></h5>
+                    <h5 class="card-title">자격요건<span> | {{ recentDate }}</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -82,7 +82,7 @@
 <!--                    </ul>-->
 <!--                  </div>-->
                   <div class="card-body">
-                    <h5 class="card-title">우대사항 <span>| Today</span></h5>
+                    <h5 class="card-title">우대사항 <span>| {{ recentDate }}</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -181,6 +181,7 @@ export default {
   mixins : [mixins],
   data() { //html과 js코드에서 사용할 데이터 변수 선언
     return {
+      recentDate : '',
       card : {
         updated : {
           today : 0,    // 오늘 업데이트 공고
@@ -217,6 +218,9 @@ export default {
     },
     // 페이지 상단 3개의 카드 정보
     initCard(jsonData){
+      // 데이터 날짜
+      this.recentDate = jsonData.date
+
       // 업데이트
       this.card.updated.today = jsonData.updatedCnt
       this.card.updated.compare = Math.abs(jsonData.comparedCnt)
