@@ -8,7 +8,7 @@
           <div class="col-lg-8">
             <div class="row">
 
-              <!-- Sales Card -->
+              <!-- Card -->
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card sales-card">
                   <div class="card-body">
@@ -28,9 +28,10 @@
                   </div>
 
                 </div>
-              </div><!-- End Sales Card -->
+              </div>
+              <!-- Card -->
 
-              <!-- Revenue Card -->
+              <!-- Card -->
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card revenue-card">
 <!--                  <div class="filter">-->
@@ -61,9 +62,10 @@
                   </div>
 
                 </div>
-              </div><!-- End Revenue Card -->
+              </div>
+              <!-- End Card -->
 
-              <!-- Customers Card -->
+              <!-- Card -->
               <div class="col-xxl-4 col-xl-12">
 
                 <div class="card info-card customers-card">
@@ -99,7 +101,8 @@
                   </div>
                 </div>
 
-              </div><!-- End Customers Card -->
+              </div>
+              <!-- End Card -->
 
               <!-- Main pie-chart -->
               <div class="col-12">
@@ -115,10 +118,12 @@
                   </div>
 
                 </div>
-              </div><!-- End Reports -->
+              </div>
+              <!-- End Main pie-chart -->
 
             </div>
-          </div><!-- End Left side columns -->
+          </div>
+          <!-- End Left side columns -->
 
           <!-- Right side columns -->
           <div class="col-lg-4">
@@ -133,16 +138,17 @@
             </div>
             <!-- End Sidebar charts -->
 
-            <!-- Recent Activity -->
+            <!-- Sidebar charts -->
             <div class="card">
               <div class="card-body-chart">
                 <h5 class="card-title-chart">자격요건 <span>| Top3</span></h5>
                 <!-- Apex Chart -->
                 <apexchart :options="sideChart2.chartOptions" :series="sideChart2.series"/>
               </div>
-            </div><!-- End Recent Activity -->
+            </div>
+            <!-- End Sidebar charts -->
 
-            <!-- Budget Report -->
+            <!-- Sidebar charts -->
             <div class="card">
               <div class="card-body-chart">
                 <h5 class="card-title-chart">우대사항 <span> | Top3</span></h5>
@@ -153,21 +159,21 @@
                 </div>
 
               </div>
-            </div><!-- End Budget Report -->
-          </div><!-- End Right side columns -->
+            </div>
+            <!-- End Sidebar charts -->
+          </div>
+          <!-- End Right side columns -->
 
         </div>
       </section>
 
     </main><!-- End #main -->
 
-
   </div>
 </template>
 
 <script>
 import mixins from '@/mixins'
-import jsonData from '@/assets/jsons/chart_data.json'
 
 export default {
   name: "WantedMainView", //컴포넌트 이름
@@ -195,24 +201,26 @@ export default {
   setup() {
   }, //컴포지션 API
   created() {
-    this.initCard()
-    this.initChart()
+    this.init()
   }, //컴포넌트가 생성되면 실행
   mounted() {
-
   }, //template에 정의된 html 코드가 랜더링된 후 실행
   unmounted() {
   }, //unmount가 완료된 후 실행
   methods: {
-    // async apiCallByMixins() {
-    //   // this.testHello = await this.$api('/api/v1/hello', 'get')
-    // },
-    initCard(){
+    init(){
+      this.$api('/api/v1/json', 'get').then((str) => {  // json file call
+        const jsonData = JSON.parse(JSON.stringify(str))
+        this.initCard(jsonData)
+        this.initChart(jsonData)
+      })
+    },
+    // 페이지 상단 3개의 카드 정보
+    initCard(jsonData){
       // 업데이트
       this.card.updated.today = jsonData.updatedCnt
       this.card.updated.compare = Math.abs(jsonData.comparedCnt)
       this.card.updated.text = jsonData.comparedCnt >= 0 ? '증가' : '감소'
-
 
       // 자격요건
       this.card.topRequirement.lang = jsonData.topLangInfo.data.REQUIREMENT.lang
@@ -224,7 +232,8 @@ export default {
       this.card.topPrefer.lang = this.card.topPrefer.lang.toUpperCase()
       this.card.topPrefer.share = jsonData.topLangInfo.data.PREFER.share
     },
-    initChart() { // 차트 init
+    // 페이지 중앙, 우측 차트 정보
+    initChart(jsonData) { // 차트 init
       // vue3-apex charts for pie example from https://apexcharts.com/vue-chart-demos/pie-charts/simple-pie-chart/
 
       // main chart
@@ -251,7 +260,7 @@ export default {
       }
 
       // side chart 의 날짜 만들기 function (langType = java, python ..., firstLang = langType 의 첫번째 언어)
-      function createDates(langType, firstLang) {
+      function createDates(jsonData, langType, firstLang) {
         let mainDate = ''
         let leftDates = []
 
@@ -274,7 +283,7 @@ export default {
       }
 
       // json 기반으로 chartData 만듦
-      function createChartDataList() {
+      function createChartDataList(jsonData) {
         let langTypeList = Object.keys(jsonData.top3LangTrend.data) // [main, requirement, prefer]
 
         let result = []
@@ -293,7 +302,7 @@ export default {
           // 언어별 컬러코드
           Object.keys(dataObj).forEach(key => dataColors.push(jsonData.langColor.data[key]))
 
-          let dataDates = createDates(langType, dataSeries[0].name)
+          let dataDates = createDates(jsonData, langType, dataSeries[0].name)
 
           let chartData = {
             series: dataSeries,
@@ -337,7 +346,7 @@ export default {
         return result
       }
 
-      let chartDataList = createChartDataList();
+      let chartDataList = createChartDataList(jsonData);
 
       this.sideChart1 = chartDataList[0]
       this.sideChart2 = chartDataList[1]
