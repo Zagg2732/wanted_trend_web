@@ -1,13 +1,16 @@
 <template>
   <HeaderTitle />
   <router-view/>
+  <Footer/>
+
 </template>
 
 <script>
-import HeaderTitle from "@/layouts/HeaderTitle";
+import HeaderTitle from '@/layouts/HeaderTitle'
+import Footer from '@/layouts/Footer'
 
 export default {
-  components: {HeaderTitle}
+  components: {Footer, HeaderTitle}
 }
 </script>
 
