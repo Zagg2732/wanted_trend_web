@@ -26,7 +26,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="https://www.notion.so/Web-developer-a3f9d1ed1d874d6e9bca8552d5f1569c">
                 <i class="bi bi-person"></i>
                 <span>Resume</span>
               </a>
