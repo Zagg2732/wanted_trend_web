@@ -169,7 +169,11 @@ public class CrawlService {
 
             LangType langType = obj;  // main, requirement, prefer
 
-            top3LangTrendMap.put(langType, createTop3Map(langType, totalLangCnt));
+            try {
+                top3LangTrendMap.put(langType, createTop3Map(langType, totalLangCnt));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
 
         // 타입별 top3 lang data for side
@@ -261,7 +265,7 @@ public class CrawlService {
     }
 
     // 타입별 top3 언어의 최근날짜 데이터 가져오기
-    public Map<String, Map<String, Integer>> createTop3Map(LangType langType, TotalLangCnt obj) {
+    public Map<String, Map<String, Integer>> createTop3Map(LangType langType, TotalLangCnt obj) throws ParseException {
         // <프로그래밍언어, <날짜, 개수>>
         Map<String, Map<String, Integer>> langMap = new LinkedHashMap<>();
 
@@ -279,27 +283,26 @@ public class CrawlService {
             // Map<날짜, 개수>
             Map<String, Integer> map = new LinkedHashMap<>();
 
-            int dtoCounts = 0;
-            int howPast = 0;
-            while (dtoCounts < 7 && howPast < 20) {
-                try {
-                    String date = getPastDate(howPast - 1);
-                    howPast++;
-
-                    // countRecentPostLang(타입, 날짜, 언어)
-                    CountTypeLangPerDateDto dto = postLangRepository.countRecentPostLang(langType, lang, date);
-
-                    // 해당 날짜에 공고가 없으면 continue
-                    if(dto == null) { continue;}
-                    else {
-                        dtoCounts++;
-                        map.put(dto.getDate(), dto.getLangCount());
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+            // 최근 n일 날짜 리스트
+            List<String> dateList = new ArrayList<>();
+            int howPast = 1;
+            while (dateList.size() < 7 && howPast < 20){
+                String targetDate = getPastDate(howPast);
+                if (postRepository.existsByDate(targetDate)) { // 해당 날짜에 공고가 있었는지 확인
+                    dateList.add(targetDate);
                 }
+                howPast++;
             }
 
+            for (String date : dateList) {
+                // countRecentPostLang(타입, 날짜, 언어)
+                CountTypeLangPerDateDto dto = postLangRepository.countRecentPostLang(langType, lang, date);
+                if (dto == null) {
+                    map.put(date, 0);
+                } else {
+                    map.put(dto.getDate(), dto.getLangCount());
+                }
+            }
             langMap.put(lang.getLangName(), map);
         }
 
