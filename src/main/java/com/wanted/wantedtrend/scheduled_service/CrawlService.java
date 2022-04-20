@@ -70,8 +70,6 @@ public class CrawlService {
             process = Runtime.getRuntime().exec(linuxCmd);
         }
 
-
-
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
 
@@ -80,7 +78,7 @@ public class CrawlService {
 
         sb.append(pythonCmd);
 
-        System.out.println("python crwaling 진행중");
+        System.out.println("python crawling 진행중");
 
         // python crawl 종료
         while ((line = reader.readLine()) != null) {
@@ -88,7 +86,7 @@ public class CrawlService {
         }
 
         // excel 저장까지 좀 기다리기
-        System.out.println("python crwaling 종료. file생성 대기");
+        System.out.println("python crawling 종료. file생성 대기");
         Thread.sleep(60000);
 
         // java로 excel 읽어와서 DB에
@@ -150,7 +148,15 @@ public class CrawlService {
         // 새로운 공고 업데이트 개수 및 전일대비 증가수
         int updatedCnt = postRepository.countByDate(getPastDate(1));
         if(updatedCnt == 0) { return;}  // 주말, 공휴일같은경우 공고가 없을수있음. 갱신 x
-        int comparedCnt = updatedCnt - postRepository.countByDate(getPastDate(2));
+
+        int beforeCnt = 0;
+        int howPast = 2;
+
+        while (beforeCnt == 0) {  // 이전에 있었던 공고와 비교하기 위해 공고수가 0이아닌 날짜 조회
+            beforeCnt = postRepository.countByDate(getPastDate(howPast));
+            howPast++;
+        }
+        int comparedCnt = updatedCnt - beforeCnt;
 
         // 메인의 pie chart data set
         TotalLangCnt totalLangCnt = getTotalLangCnts(today);
