@@ -51,7 +51,6 @@ public class CrawlService {
     private final PostRepository postRepository;
     private final PostLangRepository postLangRepository;
 
-    // test code - crawl 호출, 추후 schedular 로 동작 //
     @Scheduled(cron = "0 2 2 * * *")
     public void crawl() throws IOException, ParseException, InterruptedException {
 
@@ -148,7 +147,6 @@ public class CrawlService {
         // 새로운 공고 업데이트 개수 및 전일대비 증가수
         int updatedCnt = postRepository.countByDate(getPastDate(1));
         if(updatedCnt == 0) { return;}  // 주말, 공휴일같은경우 공고가 없을수있음. 갱신 x
-
         int beforeCnt = 0;
         int howPast = 2;
 
