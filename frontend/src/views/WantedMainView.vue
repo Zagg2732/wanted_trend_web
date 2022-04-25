@@ -12,17 +12,17 @@
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card sales-card">
                   <div class="card-body">
-                    <h5 class="card-title">업데이트 공고 <span>| {{ recentDate }}</span></h5>
+                    <h5 class="card-title">업데이트 <span>| {{ recentDate }}</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                         <i class="bi bi-pin-angle"></i>
                       </div>
                       <div class="mx-auto">
-                        <h6>{{card.updated.today}}</h6>
+                        <h6>{{ card.updated.today }}</h6>
                         <span class="text-muted small pt-2 ps-1">전일대비 </span><span
-                          class="text-success small pt-1 fw-bold">{{card.updated.compare}}</span> <span
-                          class="text-muted small pt-2 ps-1">{{card.updated.text}}</span>
+                          class="text-success small pt-1 fw-bold">{{ card.updated.compare }}</span> <span
+                          class="text-muted small pt-2 ps-1">{{ card.updated.text }}</span>
                       </div>
                     </div>
                   </div>
@@ -34,18 +34,18 @@
               <!-- Card -->
               <div class="col-xxl-4 col-md-6">
                 <div class="card info-card revenue-card">
-<!--                  <div class="filter">-->
-<!--                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>-->
-<!--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
-<!--                      <li class="dropdown-header text-start">-->
-<!--                        <h6>Filter</h6>-->
-<!--                      </li>-->
+                  <!--                  <div class="filter">-->
+                  <!--                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>-->
+                  <!--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
+                  <!--                      <li class="dropdown-header text-start">-->
+                  <!--                        <h6>Filter</h6>-->
+                  <!--                      </li>-->
 
-<!--                      <li><a class="dropdown-item" href="#">Today</a></li>-->
-<!--                      <li><a class="dropdown-item" href="#">Week</a></li>-->
-<!--                      <li><a class="dropdown-item" href="#">Month</a></li>-->
-<!--                    </ul>-->
-<!--                  </div>-->
+                  <!--                      <li><a class="dropdown-item" href="#">Today</a></li>-->
+                  <!--                      <li><a class="dropdown-item" href="#">Week</a></li>-->
+                  <!--                      <li><a class="dropdown-item" href="#">Month</a></li>-->
+                  <!--                    </ul>-->
+                  <!--                  </div>-->
                   <div class="card-body">
                     <h5 class="card-title">자격요건<span> | {{ recentDate }}</span></h5>
 
@@ -54,9 +54,16 @@
                         <i class="bi bi-stack"></i>
                       </div>
                       <div class="mx-auto">
-                        <h6>{{card.topRequirement.lang}}</h6>
-                        <span class="text-success small pt-1 fw-bold">{{card.topRequirement.share}}%</span>
-
+                        <h6>{{ card.topRequirement.lang }}</h6>
+                        <span class="text-success small pt-1 fw-bold">{{ card.topRequirement.share }}%
+                          <svg xmlns="http://www.w3.org/2000/svg" @click="questionClickEvent('REQUIREMENT')" width="13"
+                               height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"
+                               data-bs-toggle="modal" data-bs-target=".detailModal">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path
+                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                          </svg>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -69,31 +76,41 @@
               <div class="col-xxl-4 col-xl-12">
 
                 <div class="card info-card customers-card">
-<!--                  <div class="filter">-->
-<!--                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>-->
-<!--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
-<!--                      <li class="dropdown-header text-start">-->
-<!--                        <h6>Filter</h6>-->
-<!--                      </li>-->
+                  <!--                  <div class="filter">-->
+                  <!--                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>-->
+                  <!--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
+                  <!--                      <li class="dropdown-header text-start">-->
+                  <!--                        <h6>Filter</h6>-->
+                  <!--                      </li>-->
 
-<!--                      <li><a class="dropdown-item" href="#">Today</a></li>-->
-<!--                      <li><a class="dropdown-item" href="#">Week</a></li>-->
-<!--                      <li><a class="dropdown-item" href="#">Month</a></li>-->
-<!--                    </ul>-->
-<!--                  </div>-->
+                  <!--                      <li><a class="dropdown-item" href="#">Today</a></li>-->
+                  <!--                      <li><a class="dropdown-item" href="#">Week</a></li>-->
+                  <!--                      <li><a class="dropdown-item" href="#">Month</a></li>-->
+                  <!--                    </ul>-->
+                  <!--                  </div>-->
                   <div class="card-body">
                     <h5 class="card-title">우대사항 <span>| {{ recentDate }}</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-stack-overflow" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                             class="bi bi-stack-overflow" viewBox="0 0 16 16">
                           <path d="M12.412 14.572V10.29h1.428V16H1v-5.71h1.428v4.282h9.984z"/>
-                          <path d="M3.857 13.145h7.137v-1.428H3.857v1.428zM10.254 0 9.108.852l4.26 5.727 1.146-.852L10.254 0zm-3.54 3.377 5.484 4.567.913-1.097L7.627 2.28l-.914 1.097zM4.922 6.55l6.47 3.013.603-1.294-6.47-3.013-.603 1.294zm-.925 3.344 6.985 1.469.294-1.398-6.985-1.468-.294 1.397z"/>
+                          <path
+                              d="M3.857 13.145h7.137v-1.428H3.857v1.428zM10.254 0 9.108.852l4.26 5.727 1.146-.852L10.254 0zm-3.54 3.377 5.484 4.567.913-1.097L7.627 2.28l-.914 1.097zM4.922 6.55l6.47 3.013.603-1.294-6.47-3.013-.603 1.294zm-.925 3.344 6.985 1.469.294-1.398-6.985-1.468-.294 1.397z"/>
                         </svg>
                       </div>
                       <div class="mx-auto">
-                        <h6>{{card.topPrefer.lang}}</h6>
-                        <span class="text-danger small pt-1 fw-bold">{{card.topPrefer.share}}%</span>
+                        <h6>{{ card.topPrefer.lang }}</h6>
+                        <span class="text-danger small pt-1 fw-bold">{{ card.topPrefer.share }}%
+                           <svg xmlns="http://www.w3.org/2000/svg" @click="questionClickEvent('PREFER')" width="13"
+                                height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"
+                                data-bs-toggle="modal" data-bs-target=".detailModal">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path
+                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                           </svg>
+                        </span>
 
                       </div>
                     </div>
@@ -123,6 +140,20 @@
 
             </div>
           </div>
+
+          <!-- Modal for (i) icon @click : see detail -->
+          <div class="modal fade detailModal" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" ref="modalDetail">
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- End Left side columns -->
 
           <!-- Right side columns -->
@@ -178,23 +209,24 @@ import mixins from '@/mixins'
 export default {
   name: "WantedMainView", //컴포넌트 이름
   components: {}, //다른 컴포넌트 사용 시 import(배열로 등록)
-  mixins : [mixins],
+  mixins: [mixins],
   data() { //html과 js코드에서 사용할 데이터 변수 선언
     return {
-      recentDate : '',
-      card : {
-        updated : {
-          today : 0,    // 오늘 업데이트 공고
-          compare : 0,  // 전날과 비교한 업데이트 공고 증감
-          text : ''     // 증가 / 감소 text
+      jsonData: '',
+      recentDate: '',
+      card: {
+        updated: {
+          today: 0,    // 오늘 업데이트 공고
+          compare: 0,  // 전날과 비교한 업데이트 공고 증감
+          text: ''     // 증가 / 감소 text
         },
-        topRequirement : {
-          lang : '',
-          share : 0.0
+        topRequirement: {
+          lang: '',
+          share: 0.0
         },
-        topPrefer : {
-          lang : '',
-          share : 0.0
+        topPrefer: {
+          lang: '',
+          share: 0.0
         }
       },
     };
@@ -209,15 +241,16 @@ export default {
   unmounted() {
   }, //unmount가 완료된 후 실행
   methods: {
-    init(){
+    init() {
       this.$api('/api/v1/json', 'get').then((str) => {  // json file call
         const jsonData = JSON.parse(JSON.stringify(str))
+        this.jsonData = jsonData
         this.initCard(jsonData)
         this.initChart(jsonData)
       })
     },
     // 페이지 상단 3개의 카드 정보
-    initCard(jsonData){
+    initCard(jsonData) {
       // 데이터 날짜
       this.recentDate = jsonData.date
 
@@ -249,7 +282,7 @@ export default {
       this.mainChart = {
         series: mainChartSeries,
         chartOptions: {
-          colors :mainChartColors,
+          colors: mainChartColors,
           chart: {
             type: 'pie'
           },
@@ -277,8 +310,8 @@ export default {
               }
             }
         )
-        mainDate =  mainDate[0] == '0' ? mainDate.substr(1) : mainDate  // 04/01 -> 4/01
-        mainDate = mainDate[mainDate.length - 2] == '0' ? mainDate.substr(0, mainDate.length-2) + mainDate.substr(mainDate.length - 1) : mainDate; // 4/01 -> 4/1
+        mainDate = mainDate[0] == '0' ? mainDate.substr(1) : mainDate  // 04/01 -> 4/01
+        mainDate = mainDate[mainDate.length - 2] == '0' ? mainDate.substr(0, mainDate.length - 2) + mainDate.substr(mainDate.length - 1) : mainDate; // 4/01 -> 4/1
 
         let result = leftDates.reverse()
         result.unshift(mainDate)
@@ -299,7 +332,7 @@ export default {
           let dataObj = jsonData.top3LangTrend.data[langType]
 
           Object.keys(dataObj).forEach(lang => { // [java, python, c]
-            let obj = {name : lang, data : Object.values(dataObj[lang])} // data : [30, 25, 20]
+            let obj = {name: lang, data: Object.values(dataObj[lang])} // data : [30, 25, 20]
             dataSeries.push(obj)
           })
 
@@ -325,7 +358,7 @@ export default {
                 enabled: false
               },
               colors: dataColors,
-              markers:{
+              markers: {
                 size: 4
               },
               stroke: {
@@ -355,6 +388,27 @@ export default {
       this.sideChart1 = chartDataList[0]
       this.sideChart2 = chartDataList[1]
       this.sideChart3 = chartDataList[2]
+    },
+    // 자격요건, 우대사항 점유율 오른쪽 물음표 아이콘 클릭시 datail 출력
+    questionClickEvent(type) { // type = requirement / prefer
+      let jsonData = this.jsonData.totalLangCnt.data[type]
+      let langTable = `<table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">언어</th>
+                            <th scope="col">공고 수</th>
+                          </tr>
+                        </thead>
+                        <tbody>`
+      Object.keys(jsonData).forEach(lang => { // json 에서 언어(key) 와 개수(value) 테이블에 삽입
+        langTable +=`<tr>
+                  <th scope="row">${lang}</th>
+                  <td>${jsonData[lang]}</td>
+              </tr>`
+      })
+      langTable += `</tbody></table>`
+
+      this.$refs.modalDetail.innerHTML = langTable
     }
   }
 }
